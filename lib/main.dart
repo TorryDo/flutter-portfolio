@@ -1,14 +1,8 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
-import 'package:portfolio/common/utils/framework/navigation_ext.dart';
+import 'package:portfolio/const.dart';
+import 'package:portfolio/custom_themes.dart';
 import 'package:portfolio/routes.dart';
-import 'package:portfolio/src/presentation/about/about_screen.dart';
 import 'package:portfolio/src/presentation/app_navigator.dart';
-import 'package:portfolio/src/presentation/contact/contact_screen.dart';
-import 'package:portfolio/src/presentation/experience/experience_screen.dart';
-import 'package:portfolio/src/presentation/project/project_screen.dart';
-import 'package:portfolio/src/presentation/skill/skill_screen.dart';
 import 'package:portfolio/utils/lib/provider/provider_ext.dart';
 import 'package:provider/provider.dart';
 
@@ -50,7 +44,7 @@ class _MyAppState extends State<MyApp> {
   int _selectedIndex = 0;
   NavigationRailLabelType labelType = NavigationRailLabelType.all;
   bool showLeading = false;
-  bool showTrailing = false;
+  bool showTrailing = true;
   double groupAlignment = -1.0;
 
   List<String> routeNames = [
@@ -75,60 +69,79 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       home: Stack(
         children: [
-          AppNavigator(),
-          SizedBox(
-            width: 100,
-            height: double.infinity,
-            child: NavigationRail(
-              selectedIndex: _selectedIndex,
-              groupAlignment: groupAlignment,
-              onDestinationSelected: _onDestinationSelected,
-              labelType: labelType,
-              leading: showLeading
-                  ? FloatingActionButton(
-                      elevation: 0,
-                      onPressed: () {
-                        // Add your onPressed code here!
-                      },
-                      child: const Icon(Icons.add),
-                    )
-                  : const SizedBox(),
-              trailing: showTrailing
-                  ? IconButton(
-                      onPressed: () {
-                        // Add your onPressed code here!
-                      },
-                      icon: const Icon(Icons.more_horiz_rounded),
-                    )
-                  : const SizedBox(),
-              destinations: const <NavigationRailDestination>[
-                NavigationRailDestination(
-                  icon: Icon(Icons.person_outline),
-                  selectedIcon: Icon(Icons.person),
-                  label: Text('About'),
+          Container(
+            padding: EdgeInsets.only(left: Const.sideBarWidth),
+            child: const AppNavigator(),
+          ),
+          Row(
+            children: [
+              SizedBox(
+                width: Const.sideBarWidth,
+                height: double.infinity,
+                child: NavigationRail(
+                  selectedIndex: _selectedIndex,
+                  groupAlignment: groupAlignment,
+                  onDestinationSelected: _onDestinationSelected,
+                  labelType: labelType,
+                  leading: showLeading
+                      ? FloatingActionButton(
+                          elevation: 0,
+                          onPressed: () {
+                            // Add your onPressed code here!
+                          },
+                          child: const Icon(Icons.add),
+                        )
+                      : const SizedBox(),
+                  trailing: Expanded(
+                    child: Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Padding(
+                        padding: const EdgeInsets.only(bottom: 20.0),
+                        child: showTrailing
+                            ? FloatingActionButton(
+                                elevation: 0,
+                                onPressed: changeTheme,
+                                child: getIconByTheme(mainProvider.theme),
+                              )
+                            : const SizedBox(),
+                      ),
+                    ),
+                  ),
+                  destinations: const <NavigationRailDestination>[
+                    NavigationRailDestination(
+                      icon: Icon(Icons.person_outline),
+                      selectedIcon: Icon(Icons.person),
+                      label: Text('About'),
+                    ),
+                    NavigationRailDestination(
+                      icon: Icon(Icons.star_border),
+                      selectedIcon: Icon(Icons.star),
+                      label: Text('Skills'),
+                    ),
+                    NavigationRailDestination(
+                      icon: Icon(Icons.book_outlined),
+                      selectedIcon: Icon(Icons.book),
+                      label: Text('Projects'),
+                    ),
+                    NavigationRailDestination(
+                      icon: Icon(Icons.work_outline),
+                      selectedIcon: Icon(Icons.work),
+                      label: Text('Experiences'),
+                    ),
+                    NavigationRailDestination(
+                      icon: Icon(Icons.email_outlined),
+                      selectedIcon: Icon(Icons.email),
+                      label: Text('Contact'),
+                    ),
+                  ],
                 ),
-                NavigationRailDestination(
-                  icon: Icon(Icons.star_border),
-                  selectedIcon: Icon(Icons.star),
-                  label: Text('Skills'),
-                ),
-                NavigationRailDestination(
-                  icon: Icon(Icons.book_outlined),
-                  selectedIcon: Icon(Icons.book),
-                  label: Text('Projects'),
-                ),
-                NavigationRailDestination(
-                  icon: Icon(Icons.link_outlined),
-                  selectedIcon: Icon(Icons.link),
-                  label: Text('Experiences'),
-                ),
-                NavigationRailDestination(
-                  icon: Icon(Icons.phone_iphone),
-                  selectedIcon: Icon(Icons.phone_iphone),
-                  label: Text('Contact'),
-                ),
-              ],
-            ),
+              ),
+              Container(
+                width: 2,
+                height: double.infinity,
+                color: Colors.grey,
+              )
+            ],
           ),
         ],
       ),
@@ -139,6 +152,26 @@ class _MyAppState extends State<MyApp> {
     setState(() {
       _selectedIndex = index;
     });
-    mainProvider.route = routeNames[index];
+    mainProvider.toRoute(routeNames[index]);
+  }
+
+  void changeTheme(){
+    switch(mainProvider.theme){
+      case CustomTheme.light:
+        mainProvider.setTheme(CustomTheme.dark);
+        break;
+      case CustomTheme.dark:
+        mainProvider.setTheme(CustomTheme.light);
+        break;
+    }
+  }
+
+  Widget getIconByTheme(CustomTheme theme){
+    switch(theme){
+      case CustomTheme.light:
+        return const Icon(Icons.light_mode);
+      case CustomTheme.dark:
+        return const Icon(Icons.dark_mode);
+    }
   }
 }

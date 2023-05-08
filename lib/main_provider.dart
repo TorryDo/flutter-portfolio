@@ -1,54 +1,46 @@
 import 'package:flutter/material.dart';
-import 'package:portfolio/common/utils/framework/navigation_ext.dart';
+import 'package:portfolio/custom_themes.dart';
 import 'package:portfolio/routes.dart';
 
 import 'common/utils/logger/mixin_logger.dart';
 
 class MainProvider extends ChangeNotifier with Logger {
-  bool _isDarkTheme = false;
   late MainNavigator mainNavigator;
-  late ThemeData themeData;
 
-  late String _route;
+  String _route = Routes.ABOUT_SCREEN;
+  CustomTheme _theme = CustomTheme.light;
+
+  get route => _route;
+  get theme => _theme;
+  get themeData => CustomThemes.getTheme(_theme);
 
   MainProvider({
-    bool isDarkTheme = false,
-    String route = Routes.ABOUT_SCREEN
+    String route = Routes.ABOUT_SCREEN,
+    CustomTheme theme = CustomTheme.light,
   }) {
-    _isDarkTheme = isDarkTheme;
-    themeData = isDarkTheme ? _darkTheme : _lightTheme;
     _route = route;
+    _theme = theme;
   }
 
-  void registerNavigator(MainNavigator mainNavigator){
+  void registerNavigator(MainNavigator mainNavigator) {
     this.mainNavigator = mainNavigator;
   }
 
-  final ThemeData _lightTheme = ThemeData(
-    colorSchemeSeed: Colors.blue,
-    useMaterial3: true,
-  );
-
-  final ThemeData _darkTheme = ThemeData(
-    colorSchemeSeed: Colors.blueGrey,
-    useMaterial3: true,
-  );
-
-  set theme(bool darkThemeEnabled) {
-    _isDarkTheme = darkThemeEnabled;
-    themeData = _isDarkTheme ? _darkTheme : _lightTheme;
+  void setTheme(CustomTheme theme) {
+    _theme = theme;
     notifyListeners();
   }
 
-  set route(String route){
-    _route = route;
+
+
+  void toRoute(String route) {
     mainNavigator.toRoute(route);
+    _route = route;
   }
 
-
-
+  get currentRoute => _route;
 }
 
-abstract class MainNavigator{
+abstract class MainNavigator {
   void toRoute(String route);
 }
