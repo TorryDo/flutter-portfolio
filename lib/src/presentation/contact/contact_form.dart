@@ -20,8 +20,9 @@ class _ContactFormState extends State<ContactForm> {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          border: Border.all(color: colorScheme.inverseSurface),
-          borderRadius: const BorderRadius.all(Radius.circular(15))),
+        borderRadius: const BorderRadius.all(Radius.circular(15)),
+        color: colorScheme.primaryContainer.withOpacity(0.3)
+      ),
       child: Padding(
         padding:
             const EdgeInsets.only(left: 10, right: 10, top: 20, bottom: 10),
@@ -42,20 +43,7 @@ class _ContactFormState extends State<ContactForm> {
               ],
             ),
             const SizedBox(height: 10),
-            Row(
-              children: [
-                Flexible(
-                  flex: 1,
-                  child: _oneLineTextField(hintText: 'Telephone number'),
-                ),
-                const SizedBox(width: 10),
-                Flexible(
-                  flex: 1,
-                  child:
-                      _oneLineTextField(hintText: 'Subject', isRequired: true),
-                )
-              ],
-            ),
+            _oneLineTextField(hintText: 'Subject', isRequired: true),
             const SizedBox(height: 10),
             _multipleLineTextField(hintText: "Describe your awesome idea here"),
             const SizedBox(height: 30),
@@ -66,6 +54,8 @@ class _ContactFormState extends State<ContactForm> {
       ),
     );
   }
+
+  final textFieldBackgroundOpacity = 0.7;
 
   Widget _oneLineTextField({
     String hintText = "",
@@ -87,7 +77,7 @@ class _ContactFormState extends State<ContactForm> {
         ),
         floatingLabelBehavior: FloatingLabelBehavior.auto,
         filled: true,
-        fillColor: colorScheme.background,
+        fillColor: colorScheme.background.withOpacity(textFieldBackgroundOpacity),
       ),
     );
   }
@@ -112,7 +102,7 @@ class _ContactFormState extends State<ContactForm> {
         ),
         floatingLabelBehavior: FloatingLabelBehavior.auto,
         filled: true,
-        fillColor: colorScheme.background,
+        fillColor: colorScheme.background.withOpacity(textFieldBackgroundOpacity),
         alignLabelWithHint: true,
       ),
       keyboardType: TextInputType.multiline,
@@ -121,14 +111,17 @@ class _ContactFormState extends State<ContactForm> {
     );
   }
 
-  Widget _submitButton(String text, {Function()? onPressed}){
+  Widget _submitButton(String text, {Function()? onPressed}) {
     return ElevatedButton(
       onPressed: onPressed,
       style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all(colorScheme.primaryContainer),
+        backgroundColor:
+            MaterialStateProperty.all(colorScheme.primaryContainer),
         elevation: MaterialStateProperty.all(2.0),
-        padding: MaterialStateProperty.all(const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0)),
-        shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0))),
+        padding: MaterialStateProperty.all(
+            const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0)),
+        shape: MaterialStateProperty.all(
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0))),
       ),
       child: Text(
         text,

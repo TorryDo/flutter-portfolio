@@ -1,7 +1,11 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:getwidget/getwidget.dart';
 import 'package:portfolio/src/presentation/contact/contact_form.dart';
+import 'package:portfolio/utils/yaml/yaml_helper.dart';
+
+import '../../model/social_info.dart';
 
 class ContactScreen extends StatefulWidget {
   const ContactScreen({Key? key}) : super(key: key);
@@ -12,6 +16,8 @@ class ContactScreen extends StatefulWidget {
 
 class _ContactScreenState extends State<ContactScreen> {
   late ColorScheme colorScheme;
+
+  List<SocialInfo> ss = [];
 
   @override
   void didChangeDependencies() {
@@ -61,7 +67,8 @@ class _ContactScreenState extends State<ContactScreen> {
     );
   }
 
-  Widget _socialButton(IconData iconData, {double size = 50, Function()? onPressed }){
+  Widget _socialButton(IconData iconData,
+      {double size = 50, Function()? onPressed}) {
     return GestureDetector(
       onTap: onPressed,
       child: Container(
@@ -69,8 +76,7 @@ class _ContactScreenState extends State<ContactScreen> {
         height: size,
         decoration: BoxDecoration(
             borderRadius: const BorderRadius.all(Radius.circular(10)),
-          color: colorScheme.primaryContainer
-        ),
+            color: colorScheme.primaryContainer),
         child: Icon(iconData),
       ),
     );
