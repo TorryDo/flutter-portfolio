@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:portfolio/custom_themes.dart';
 import 'package:portfolio/routes.dart';
+import 'package:portfolio/src/presentation/home_contract.dart';
 
-import 'common/utils/logger/mixin_logger.dart';
+import '../../common/utils/logger/mixin_logger.dart';
 
 class MainProvider extends ChangeNotifier with Logger {
-  late MainNavigator mainNavigator;
+  late MainContract mainContract;
 
   String _route = Routes.ABOUT_SCREEN;
   CustomTheme _theme = CustomTheme.light;
@@ -22,8 +23,8 @@ class MainProvider extends ChangeNotifier with Logger {
     _theme = theme;
   }
 
-  void registerNavigator(MainNavigator mainNavigator) {
-    this.mainNavigator = mainNavigator;
+  void registerNavigator(MainContract mainNavigator) {
+    this.mainContract = mainNavigator;
   }
 
   void setTheme(CustomTheme theme) {
@@ -31,16 +32,10 @@ class MainProvider extends ChangeNotifier with Logger {
     notifyListeners();
   }
 
-
-
-  void toRoute(String route) {
-    mainNavigator.toRoute(route);
+  void navigateToRoute(String route) {
+    mainContract.navigateTo(route);
     _route = route;
   }
 
   get currentRoute => _route;
-}
-
-abstract class MainNavigator {
-  void toRoute(String route);
 }

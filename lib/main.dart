@@ -1,12 +1,13 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:portfolio/const.dart';
+import 'package:portfolio/utils/const.dart';
 import 'package:portfolio/custom_themes.dart';
 import 'package:portfolio/routes.dart';
-import 'package:portfolio/src/presentation/app_navigator.dart';
+import 'package:portfolio/src/presentation/main_navigator.dart';
 import 'package:portfolio/utils/lib/provider/provider_ext.dart';
 import 'package:provider/provider.dart';
 
-import 'main_provider.dart';
+import 'src/presentation/main_provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -61,6 +62,8 @@ class _MyAppState extends State<MyApp> {
     mainProvider = context.provider<MainProvider>();
   }
 
+  bool extendLikeButton = false;
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -71,7 +74,7 @@ class _MyAppState extends State<MyApp> {
         children: [
           Container(
             padding: EdgeInsets.only(left: Const.sideBarWidth),
-            child: const AppNavigator(),
+            child: const MainNavigator(),
           ),
           Row(
             children: [
@@ -86,9 +89,7 @@ class _MyAppState extends State<MyApp> {
                   leading: showLeading
                       ? FloatingActionButton(
                           elevation: 0,
-                          onPressed: () {
-                            // Add your onPressed code here!
-                          },
+                          onPressed: () {},
                           child: const Icon(Icons.add),
                         )
                       : const SizedBox(),
@@ -101,6 +102,7 @@ class _MyAppState extends State<MyApp> {
                             ? FloatingActionButton(
                                 elevation: 0,
                                 onPressed: changeTheme,
+                                tooltip: "Right-click to get more options",
                                 child: getIconByTheme(mainProvider.theme),
                               )
                             : const SizedBox(),
@@ -136,13 +138,36 @@ class _MyAppState extends State<MyApp> {
                   ],
                 ),
               ),
-              Container(
-                width: 2,
-                height: double.infinity,
-                color: Colors.grey,
+              Expanded(
+                child: Align(
+                  alignment: Alignment.bottomRight,
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 10, bottom: 20),
+                    child: MouseRegion(
+                      onEnter: (PointerEnterEvent event){
+                        setState(() {
+                          extendLikeButton = true;
+                        });
+                      },
+                      onExit: (PointerExitEvent event){
+                        setState(() {
+                          extendLikeButton = false;
+                        });
+                      },
+                      child: FloatingActionButton.extended(
+                        onPressed: () {},
+                        label: const Text("42.083"),
+                        icon: const Icon(Icons.thumb_up),
+                        isExtended: extendLikeButton,
+                        tooltip: "Gimme a like!",
+                      ),
+                    ),
+                  ),
+                ),
               )
             ],
           ),
+
         ],
       ),
     );
@@ -152,11 +177,11 @@ class _MyAppState extends State<MyApp> {
     setState(() {
       _selectedIndex = index;
     });
-    mainProvider.toRoute(routeNames[index]);
+    mainProvider.navigateToRoute(routeNames[index]);
   }
 
-  void changeTheme(){
-    switch(mainProvider.theme){
+  void changeTheme() {
+    switch (mainProvider.theme) {
       case CustomTheme.light:
         mainProvider.setTheme(CustomTheme.dark);
         break;
@@ -166,8 +191,8 @@ class _MyAppState extends State<MyApp> {
     }
   }
 
-  Widget getIconByTheme(CustomTheme theme){
-    switch(theme){
+  Widget getIconByTheme(CustomTheme theme) {
+    switch (theme) {
       case CustomTheme.light:
         return const Icon(Icons.light_mode);
       case CustomTheme.dark:

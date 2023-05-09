@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:portfolio/common/utils/framework/navigation_ext.dart';
-import 'package:portfolio/main_provider.dart';
+import 'package:portfolio/src/presentation/main_provider.dart';
+import 'package:portfolio/src/presentation/home_contract.dart';
 import 'package:portfolio/src/presentation/project/project_screen.dart';
 import 'package:portfolio/src/presentation/skill/skill_screen.dart';
 import 'package:portfolio/utils/lib/provider/provider_ext.dart';
@@ -12,14 +13,14 @@ import 'about/about_screen.dart';
 import 'contact/contact_screen.dart';
 import 'experience/experience_screen.dart';
 
-class AppNavigator extends StatefulWidget {
-  const AppNavigator({Key? key}) : super(key: key);
+class MainNavigator extends StatefulWidget {
+  const MainNavigator({Key? key}) : super(key: key);
 
   @override
-  State<AppNavigator> createState() => _AppNavigatorState();
+  State<MainNavigator> createState() => _MainNavigatorState();
 }
 
-class _AppNavigatorState extends State<AppNavigator> with Logger implements MainNavigator {
+class _MainNavigatorState extends State<MainNavigator> with Logger implements MainContract {
 
   late MainProvider mainProvider;
 
@@ -76,7 +77,7 @@ class _AppNavigatorState extends State<AppNavigator> with Logger implements Main
             return MaterialPageRoute(
               builder: (context){
                 _navigatorContext = context;
-                return AboutScreen();},
+                return ContactScreen();},
               settings: settings,
             );
         }
@@ -84,8 +85,11 @@ class _AppNavigatorState extends State<AppNavigator> with Logger implements Main
     );
   }
 
+  //region Implement contracts
   @override
-  void toRoute(String route) {
+  void navigateTo(String route) {
     _navigatorContext?.pushNamed(route);
   }
+
+  //endregion
 }

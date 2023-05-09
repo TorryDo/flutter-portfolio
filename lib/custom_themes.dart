@@ -7,13 +7,13 @@ enum CustomTheme {
 
 class CustomThemes {
   static final ThemeData lightTheme = ThemeData(
-    colorSchemeSeed: Colors.blue,
+    colorSchemeSeed: const Color(0XFF6C9BCF),
     brightness: Brightness.light,
     useMaterial3: true,
   );
 
   static final ThemeData darkTheme = ThemeData(
-    colorSchemeSeed: Colors.blue,
+    colorSchemeSeed: const Color(0XFF6C9BCF),
     brightness: Brightness.dark,
     useMaterial3: true,
   );
