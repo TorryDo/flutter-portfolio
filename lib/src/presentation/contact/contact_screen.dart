@@ -1,11 +1,9 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:portfolio/src/presentation/contact/contact_form.dart';
-import 'package:portfolio/utils/yaml/yaml_helper.dart';
-
-import '../../model/social_info.dart';
+import 'package:portfolio/src/provider/social_info_list_provider.dart';
+import 'package:portfolio/utils/lib/provider/provider_ext.dart';
+import 'package:portfolio/utils/open_link.dart';
 
 class ContactScreen extends StatefulWidget {
   const ContactScreen({Key? key}) : super(key: key);
@@ -16,12 +14,13 @@ class ContactScreen extends StatefulWidget {
 
 class _ContactScreenState extends State<ContactScreen> {
   late ColorScheme colorScheme;
-
-  List<SocialInfo> ss = [];
+  late SocialInfoListProvider socialInfoListProvider;
 
   @override
   void didChangeDependencies() {
     colorScheme = Theme.of(context).colorScheme;
+    socialInfoListProvider = context.provider();
+
     super.didChangeDependencies();
   }
 
@@ -35,14 +34,14 @@ class _ContactScreenState extends State<ContactScreen> {
           children: [
             const SizedBox(height: 20),
             const Text(
-              "Let's build Fancy stuffs together",
+              "Let's build Awesome stuffs together",
               style: TextStyle(fontWeight: FontWeight.normal, fontSize: 20),
             ),
             const SizedBox(height: 10),
             _socialButtons(),
             const SizedBox(height: 20),
-            Padding(
-              padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
+            const Padding(
+              padding: EdgeInsets.only(left: 20, right: 20, top: 15),
               child: ContactForm(),
             )
           ],
@@ -56,28 +55,42 @@ class _ContactScreenState extends State<ContactScreen> {
       padding: const EdgeInsets.only(top: 10),
       child: Row(
         mainAxisSize: MainAxisSize.min,
-        children: [
-          _socialButton(FontAwesomeIcons.facebook),
-          const SizedBox(width: 20),
-          _socialButton(FontAwesomeIcons.github),
-          const SizedBox(width: 20),
-          _socialButton(FontAwesomeIcons.linkedin),
-        ],
+        children: socialInfoListProvider.get().map((e) {
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: _socialButton(
+              uri: e.logoUri,
+              url: e.url,
+              semanticsLabel: e.name,
+              onPressed: () {OpenLink.openInNewTab(e.url);},
+            ),
+          );
+        }).toList(),
       ),
     );
   }
 
-  Widget _socialButton(IconData iconData,
-      {double size = 50, Function()? onPressed}) {
-    return GestureDetector(
-      onTap: onPressed,
-      child: Container(
-        width: size,
-        height: size,
-        decoration: BoxDecoration(
-            borderRadius: const BorderRadius.all(Radius.circular(10)),
-            color: colorScheme.primaryContainer),
-        child: Icon(iconData),
+  Widget _socialButton(
+      {required String uri,
+      required String url,
+      double size = 50,
+      Function()? onPressed,
+      semanticsLabel = ''}) {
+    return Tooltip(
+      message: url,
+      child: GestureDetector(
+        onTap: onPressed,
+        child: Container(
+          width: size,
+          height: size,
+          decoration: BoxDecoration(
+              borderRadius: const BorderRadius.all(Radius.circular(10)),
+              color: colorScheme.primaryContainer),
+          child: SvgPicture.asset(
+            uri,
+            semanticsLabel: semanticsLabel,
+          ),
+        ),
       ),
     );
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nice_buttons/nice_buttons.dart';
 
 class ContactForm extends StatefulWidget {
   const ContactForm({Key? key}) : super(key: key);
@@ -20,12 +21,11 @@ class _ContactFormState extends State<ContactForm> {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        borderRadius: const BorderRadius.all(Radius.circular(15)),
-        color: colorScheme.primaryContainer.withOpacity(0.3)
-      ),
+          borderRadius: const BorderRadius.all(Radius.circular(15)),
+          color: colorScheme.primaryContainer.withOpacity(0.3)),
       child: Padding(
         padding:
-            const EdgeInsets.only(left: 10, right: 10, top: 20, bottom: 10),
+            const EdgeInsets.only(left: 30, right: 30, top: 25, bottom: 20),
         child: Column(
           children: [
             Row(
@@ -44,8 +44,8 @@ class _ContactFormState extends State<ContactForm> {
             ),
             const SizedBox(height: 10),
             _oneLineTextField(hintText: 'Subject', isRequired: true),
-            const SizedBox(height: 10),
-            _multipleLineTextField(hintText: "Describe your awesome idea here"),
+            const SizedBox(height: 20),
+            _multipleLineTextField(hintText: "Message"),
             const SizedBox(height: 30),
             _submitButton('Send'),
             const SizedBox(height: 20),
@@ -77,7 +77,8 @@ class _ContactFormState extends State<ContactForm> {
         ),
         floatingLabelBehavior: FloatingLabelBehavior.auto,
         filled: true,
-        fillColor: colorScheme.background.withOpacity(textFieldBackgroundOpacity),
+        fillColor:
+            colorScheme.background.withOpacity(textFieldBackgroundOpacity),
       ),
     );
   }
@@ -102,7 +103,8 @@ class _ContactFormState extends State<ContactForm> {
         ),
         floatingLabelBehavior: FloatingLabelBehavior.auto,
         filled: true,
-        fillColor: colorScheme.background.withOpacity(textFieldBackgroundOpacity),
+        fillColor:
+            colorScheme.background.withOpacity(textFieldBackgroundOpacity),
         alignLabelWithHint: true,
       ),
       keyboardType: TextInputType.multiline,
@@ -112,24 +114,23 @@ class _ContactFormState extends State<ContactForm> {
   }
 
   Widget _submitButton(String text, {Function()? onPressed}) {
-    return ElevatedButton(
-      onPressed: onPressed,
-      style: ButtonStyle(
-        backgroundColor:
-            MaterialStateProperty.all(colorScheme.primaryContainer),
-        elevation: MaterialStateProperty.all(2.0),
-        padding: MaterialStateProperty.all(
-            const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0)),
-        shape: MaterialStateProperty.all(
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0))),
-      ),
+
+    return NiceButtons(
+      stretch: false,
+      gradientOrientation: GradientOrientation.Horizontal,
+      onTap: (finish) {
+        if(onPressed != null) onPressed();
+      },
+      startColor: colorScheme.primaryContainer,
+      endColor: colorScheme.primaryContainer,
+      borderThickness: 3,
+      borderColor: colorScheme.primary,
+      borderRadius: 15,
       child: Text(
-        text,
-        style: TextStyle(
-          color: colorScheme.onBackground,
-          fontSize: 24.0,
-        ),
+        'Send',
+        style: TextStyle(color: colorScheme.onPrimaryContainer, fontSize: 18),
       ),
+
     );
   }
 }
