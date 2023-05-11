@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:portfolio/common/utils/framework/navigation_ext.dart';
-import 'package:portfolio/src/presentation/main_provider.dart';
+import 'package:portfolio/src/presentation/contact/contact_screen.dart';
 import 'package:portfolio/src/presentation/home_contract.dart';
+import 'package:portfolio/src/presentation/main_provider.dart';
 import 'package:portfolio/src/presentation/project/project_screen.dart';
 import 'package:portfolio/src/presentation/skill/skill_screen.dart';
 import 'package:portfolio/utils/lib/provider/provider_ext.dart';
@@ -10,7 +10,6 @@ import 'package:portfolio/utils/lib/provider/provider_ext.dart';
 import '../../common/utils/logger/mixin_logger.dart';
 import '../../routes.dart';
 import 'about/about_screen.dart';
-import 'contact/contact_screen.dart';
 import 'experience/experience_screen.dart';
 
 class MainNavigator extends StatefulWidget {
@@ -20,11 +19,11 @@ class MainNavigator extends StatefulWidget {
   State<MainNavigator> createState() => _MainNavigatorState();
 }
 
-class _MainNavigatorState extends State<MainNavigator> with Logger implements MainContract {
-
+class _MainNavigatorState extends State<MainNavigator>
+    with Logger
+    implements MainContract {
   late MainProvider mainProvider;
-
-  BuildContext? _navigatorContext;
+  PageController pageController = PageController(keepPage: true);
 
   @override
   void didChangeDependencies() {
@@ -35,51 +34,26 @@ class _MainNavigatorState extends State<MainNavigator> with Logger implements Ma
 
   @override
   Widget build(BuildContext context) {
-    return Navigator(
-      onGenerateRoute: (settings) {
-        switch (settings.name) {
+    return PageView.builder(
+      controller: pageController,
+      scrollDirection: Axis.vertical,
+      physics: const NeverScrollableScrollPhysics(),
+      pageSnapping: false,
+      itemCount: Routes.list.length,
+      itemBuilder: (BuildContext context, int index) {
+        switch (Routes.list[index]) {
           case Routes.ABOUT_SCREEN:
-            return MaterialPageRoute(
-              builder: (context){
-                _navigatorContext = context;
-                return AboutScreen();},
-              settings: settings,
-            );
+            return const AboutScreen();
           case Routes.SKILL_SCREEN:
-            return MaterialPageRoute(
-              builder: (context){
-                _navigatorContext = context;
-                return SkillScreen();},
-              settings: settings,
-            );
+            return const SkillScreen();
           case Routes.PROJECT_SCREEN:
-            return MaterialPageRoute(
-              builder: (context){
-                _navigatorContext = context;
-                return ProjectScreen();},
-              settings: settings,
-            );
+            return const ProjectScreen();
           case Routes.EXPERIENCE_SCREEN:
-            return MaterialPageRoute(
-              builder: (context){
-                _navigatorContext = context;
-                return ExperienceScreen();},
-              settings: settings,
-            );
+            return const ExperienceScreen();
           case Routes.CONTACT_SCREEN:
-            return MaterialPageRoute(
-              builder: (context){
-                _navigatorContext = context;
-                return ContactScreen();},
-              settings: settings,
-            );
+            return const ContactScreen();
           default:
-            return MaterialPageRoute(
-              builder: (context){
-                _navigatorContext = context;
-                return ContactScreen();},
-              settings: settings,
-            );
+            return const AboutScreen();
         }
       },
     );
@@ -88,8 +62,8 @@ class _MainNavigatorState extends State<MainNavigator> with Logger implements Ma
   //region Implement contracts
   @override
   void navigateTo(String route) {
-    _navigatorContext?.pushNamed(route);
+    pageController.jumpToPage(Routes.list.indexOf(route));
   }
 
-  //endregion
+//endregion
 }

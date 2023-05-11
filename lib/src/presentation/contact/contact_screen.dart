@@ -34,7 +34,7 @@ class _ContactScreenState extends State<ContactScreen> {
           children: [
             const SizedBox(height: 20),
             const Text(
-              "Let's build Awesome stuffs together",
+              "Let's create Awesome stuffs together",
               style: TextStyle(fontWeight: FontWeight.normal, fontSize: 20),
             ),
             const SizedBox(height: 10),
@@ -62,7 +62,9 @@ class _ContactScreenState extends State<ContactScreen> {
               uri: e.logoUri,
               url: e.url,
               semanticsLabel: e.name,
-              onPressed: () {OpenLink.openInNewTab(e.url);},
+              onPressed: () {
+                OpenLink.openInNewTab(e.url);
+              },
             ),
           );
         }).toList(),
@@ -70,12 +72,13 @@ class _ContactScreenState extends State<ContactScreen> {
     );
   }
 
-  Widget _socialButton(
-      {required String uri,
-      required String url,
-      double size = 50,
-      Function()? onPressed,
-      semanticsLabel = ''}) {
+  Widget _socialButton({
+    required String uri,
+    required String url,
+    double size = 50,
+    Function()? onPressed,
+    semanticsLabel = '',
+  }) {
     return Tooltip(
       message: url,
       child: GestureDetector(

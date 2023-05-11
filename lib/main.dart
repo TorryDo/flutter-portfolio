@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:portfolio/src/presentation/project/project_list_provider.dart';
 import 'package:portfolio/src/provider/social_info_list_provider.dart';
 import 'package:portfolio/utils/const.dart';
 import 'package:portfolio/custom_themes.dart';
@@ -28,6 +29,7 @@ class _SetupApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (context) => MainProvider()),
         ChangeNotifierProvider(create: (context) => SocialInfoListProvider()),
+        ChangeNotifierProvider(create: (context) => ProjectListProvider()),
       ],
       child: const MyApp(),
     );

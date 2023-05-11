@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:portfolio/common/utils/lang/list_ext.dart';
-import 'package:portfolio/utils/yaml/yaml_helper.dart';
+import 'package:portfolio/utils/yaml/load_contact_list.dart';
 
 import '../model/social_info.dart';
 

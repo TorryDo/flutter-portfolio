@@ -108,7 +108,7 @@ class _ContactFormState extends State<ContactForm> {
         alignLabelWithHint: true,
       ),
       keyboardType: TextInputType.multiline,
-      maxLines: null,
+      maxLines: 10,
       minLines: 5,
     );
   }

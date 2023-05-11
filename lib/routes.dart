@@ -6,4 +6,13 @@ class Routes {
   static const String PROJECT_SCREEN = '/project';
   static const String EXPERIENCE_SCREEN = '/experience';
   static const String CONTACT_SCREEN = '/contact';
+
+  static List<String> list = [
+    ABOUT_SCREEN,
+    SKILL_SCREEN,
+    PROJECT_SCREEN,
+    EXPERIENCE_SCREEN,
+    CONTACT_SCREEN
+  ];
+
 }
