@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:portfolio/src/presentation/about/about_provider.dart';
 import 'package:portfolio/src/presentation/project/project_list_provider.dart';
 import 'package:portfolio/src/presentation/qualification/job_period_list_provider.dart';
 import 'package:portfolio/src/provider/social_info_list_provider.dart';
@@ -29,6 +30,7 @@ class _SetupApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => MainProvider()),
+        ChangeNotifierProvider(create: (context) => AboutProvider()),
         ChangeNotifierProvider(create: (context) => SocialInfoListProvider()),
         ChangeNotifierProvider(create: (context) => ProjectListProvider()),
         ChangeNotifierProvider(create: (context) => JobPeriodListProvider()),
@@ -48,7 +50,6 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   late MainProvider mainProvider;
 
-  int _selectedIndex = 0;
   NavigationRailLabelType labelType = NavigationRailLabelType.all;
   bool showLeading = false;
   bool showTrailing = true;
@@ -80,7 +81,8 @@ class _MyAppState extends State<MyApp> {
                 width: Const.sideBarWidth,
                 height: double.infinity,
                 child: NavigationRail(
-                  selectedIndex: _selectedIndex,
+
+                  selectedIndex: Routes.list.indexWhere((e) => e == mainProvider.currentRoute),
                   groupAlignment: groupAlignment,
                   onDestinationSelected: _onDestinationSelected,
                   labelType: labelType,
@@ -172,9 +174,6 @@ class _MyAppState extends State<MyApp> {
   }
 
   void _onDestinationSelected(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
     mainProvider.navigateToRoute(Routes.list[index]);
   }
 

@@ -26,26 +26,27 @@ class _ContactScreenState extends State<ContactScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Material(
-      child: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const SizedBox(height: 20),
-            const Text(
-              "Let's create Awesome stuffs together",
-              style: TextStyle(fontWeight: FontWeight.normal, fontSize: 20),
-            ),
-            const SizedBox(height: 10),
-            _socialButtons(),
-            const SizedBox(height: 20),
-            const Padding(
-              padding: EdgeInsets.only(left: 20, right: 20, top: 15),
-              child: ContactForm(),
-            )
-          ],
-        ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          const SizedBox(height: 20),
+          const Text(
+            "Let's create Awesome stuffs together",
+            style: TextStyle(fontWeight: FontWeight.normal, fontSize: 20),
+          ),
+          const SizedBox(height: 10),
+          _socialButtons(),
+          const SizedBox(height: 20),
+          const Padding(
+            padding: EdgeInsets.only(left: 20, right: 20, top: 15),
+            child: ContactForm(),
+          ),
+
+          const SizedBox(height: 100)
+        ],
       ),
     );
   }

@@ -35,6 +35,7 @@ class MainProvider extends ChangeNotifier with Logger {
   void navigateToRoute(String route) {
     mainContract.navigateTo(route);
     _route = route;
+    notifyListeners();
   }
 
   get currentRoute => _route;

@@ -7,7 +7,6 @@ import 'package:portfolio/src/presentation/project/project_screen.dart';
 import 'package:portfolio/src/presentation/skill/skill_screen.dart';
 import 'package:portfolio/utils/lib/provider/provider_ext.dart';
 
-import '../../common/utils/logger/mixin_logger.dart';
 import '../../routes.dart';
 import 'about/about_screen.dart';
 import 'qualification/qualification_screen.dart';
@@ -19,9 +18,7 @@ class MainNavigator extends StatefulWidget {
   State<MainNavigator> createState() => _MainNavigatorState();
 }
 
-class _MainNavigatorState extends State<MainNavigator>
-    with Logger
-    implements MainContract {
+class _MainNavigatorState extends State<MainNavigator> implements MainContract {
   late MainProvider mainProvider;
   PageController pageController = PageController(keepPage: true);
 
@@ -37,7 +34,10 @@ class _MainNavigatorState extends State<MainNavigator>
     return PageView.builder(
       controller: pageController,
       scrollDirection: Axis.vertical,
-      physics: const NeverScrollableScrollPhysics(),
+      // physics: const NeverScrollableScrollPhysics(),
+      onPageChanged: (index) {
+        mainProvider.navigateToRoute(Routes.list[index]);
+      },
       pageSnapping: false,
       itemCount: Routes.list.length,
       itemBuilder: (BuildContext context, int index) {
@@ -62,7 +62,9 @@ class _MainNavigatorState extends State<MainNavigator>
   //region Implement contracts
   @override
   void navigateTo(String route) {
-    pageController.jumpToPage(Routes.list.indexOf(route));
+    // pageController.jumpToPage(
+    //   Routes.list.indexOf(route),
+    // );
   }
 
 //endregion

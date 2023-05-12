@@ -28,37 +28,35 @@ class _QualificationScreenState extends State<QualificationScreen> {
   @override
   Widget build(BuildContext context) {
     return Material(
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const SizedBox(height: 20),
-            const Text(
-              'Qualification',
-              style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          const SizedBox(height: 20),
+          const Text(
+            'Qualification',
+            style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 5),
+          const Text('Education & Experience'),
+          const SizedBox(height: 20),
+          SizedBox(
+            width: double.infinity,
+            child: Wrap(
+              alignment: WrapAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 20),
+                  child: _educationSection(),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 20),
+                  child: _experienceSection(
+                      jobPeriodList: jobPeriodListProvider.get()),
+                ),
+              ],
             ),
-            const SizedBox(height: 5),
-            const Text('Education & Experience'),
-            const SizedBox(height: 20),
-            SizedBox(
-              width: double.infinity,
-              child: Wrap(
-                alignment: WrapAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 20),
-                    child: _educationSection(),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 20),
-                    child: _experienceSection(
-                        jobPeriodList: jobPeriodListProvider.get()),
-                  ),
-                ],
-              ),
-            )
-          ],
-        ),
+          )
+        ],
       ),
     );
   }
