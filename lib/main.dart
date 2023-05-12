@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:portfolio/src/presentation/project/project_list_provider.dart';
+import 'package:portfolio/src/presentation/qualification/job_period_list_provider.dart';
 import 'package:portfolio/src/provider/social_info_list_provider.dart';
 import 'package:portfolio/utils/const.dart';
 import 'package:portfolio/custom_themes.dart';
@@ -30,6 +31,7 @@ class _SetupApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => MainProvider()),
         ChangeNotifierProvider(create: (context) => SocialInfoListProvider()),
         ChangeNotifierProvider(create: (context) => ProjectListProvider()),
+        ChangeNotifierProvider(create: (context) => JobPeriodListProvider()),
       ],
       child: const MyApp(),
     );
@@ -51,14 +53,6 @@ class _MyAppState extends State<MyApp> {
   bool showLeading = false;
   bool showTrailing = true;
   double groupAlignment = -1.0;
-
-  List<String> routeNames = [
-    Routes.ABOUT_SCREEN,
-    Routes.SKILL_SCREEN,
-    Routes.PROJECT_SCREEN,
-    Routes.EXPERIENCE_SCREEN,
-    Routes.CONTACT_SCREEN
-  ];
 
   @override
   void didChangeDependencies() {
@@ -119,11 +113,11 @@ class _MyAppState extends State<MyApp> {
                       selectedIcon: Icon(Icons.person),
                       label: Text('About'),
                     ),
-                    NavigationRailDestination(
-                      icon: Icon(Icons.star_border),
-                      selectedIcon: Icon(Icons.star),
-                      label: Text('Skills'),
-                    ),
+                    // NavigationRailDestination(
+                    //   icon: Icon(Icons.star_border),
+                    //   selectedIcon: Icon(Icons.star),
+                    //   label: Text('Skills'),
+                    // ),
                     NavigationRailDestination(
                       icon: Icon(Icons.book_outlined),
                       selectedIcon: Icon(Icons.book),
@@ -132,7 +126,7 @@ class _MyAppState extends State<MyApp> {
                     NavigationRailDestination(
                       icon: Icon(Icons.work_outline),
                       selectedIcon: Icon(Icons.work),
-                      label: Text('Experiences'),
+                      label: Text('Qualification'),
                     ),
                     NavigationRailDestination(
                       icon: Icon(Icons.email_outlined),
@@ -181,7 +175,7 @@ class _MyAppState extends State<MyApp> {
     setState(() {
       _selectedIndex = index;
     });
-    mainProvider.navigateToRoute(routeNames[index]);
+    mainProvider.navigateToRoute(Routes.list[index]);
   }
 
   void changeTheme() {

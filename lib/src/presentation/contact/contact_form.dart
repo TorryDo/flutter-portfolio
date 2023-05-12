@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:nice_buttons/nice_buttons.dart';
 
 class ContactForm extends StatefulWidget {
   const ContactForm({Key? key}) : super(key: key);
@@ -114,23 +113,16 @@ class _ContactFormState extends State<ContactForm> {
   }
 
   Widget _submitButton(String text, {Function()? onPressed}) {
-
-    return NiceButtons(
-      stretch: false,
-      gradientOrientation: GradientOrientation.Horizontal,
-      onTap: (finish) {
-        if(onPressed != null) onPressed();
-      },
-      startColor: colorScheme.primaryContainer,
-      endColor: colorScheme.primaryContainer,
-      borderThickness: 3,
-      borderColor: colorScheme.primary,
-      borderRadius: 15,
-      child: Text(
-        'Send',
-        style: TextStyle(color: colorScheme.onPrimaryContainer, fontSize: 18),
+    return SizedBox(
+      width: 150,
+      child: FloatingActionButton(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
+        focusElevation: 10,
+        hoverColor: Colors.blueGrey,
+        elevation: 2,
+        onPressed: onPressed,
+        child: const Text('Submit'),
       ),
-
     );
   }
 }

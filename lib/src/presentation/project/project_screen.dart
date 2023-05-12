@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:portfolio/common/widgets/rounded_search_bar.dart';
 import 'package:portfolio/src/presentation/project/project_item.dart';
 import 'package:portfolio/src/presentation/project/project_list_provider.dart';
 import 'package:portfolio/utils/lib/provider/provider_ext.dart';
@@ -26,20 +25,19 @@ class _ProjectScreenState extends State<ProjectScreen> {
   Widget build(BuildContext context) {
     return Material(
       child: SingleChildScrollView(
+        padding: const EdgeInsets.symmetric(horizontal: 10),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Padding(
-              padding: EdgeInsets.only(top: 20, left: 20, right: 20),
-              child: RoundedSearchBar(
-                width: double.infinity,
-                height: 60,
-              ),
-            ),
-            Container(
-              color: Colors.black,
-              width: double.infinity,
-              height: 100,
-            ),
+            // const Padding(
+            //   padding: EdgeInsets.only(top: 20, left: 20, right: 20),
+            //   child: RoundedSearchBar(
+            //     width: double.infinity,
+            //     height: 60,
+            //   ),
+            // ),
+            const SizedBox(height: 20),
+            const Text('Recent Projects'),
             const SizedBox(height: 10),
             SizedBox(
               width: double.infinity,

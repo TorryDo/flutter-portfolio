@@ -10,7 +10,7 @@ import 'package:portfolio/utils/lib/provider/provider_ext.dart';
 import '../../common/utils/logger/mixin_logger.dart';
 import '../../routes.dart';
 import 'about/about_screen.dart';
-import 'experience/experience_screen.dart';
+import 'qualification/qualification_screen.dart';
 
 class MainNavigator extends StatefulWidget {
   const MainNavigator({Key? key}) : super(key: key);
@@ -48,8 +48,8 @@ class _MainNavigatorState extends State<MainNavigator>
             return const SkillScreen();
           case Routes.PROJECT_SCREEN:
             return const ProjectScreen();
-          case Routes.EXPERIENCE_SCREEN:
-            return const ExperienceScreen();
+          case Routes.QUALIFICATION_SCREEN:
+            return const QualificationScreen();
           case Routes.CONTACT_SCREEN:
             return const ContactScreen();
           default:

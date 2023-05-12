@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:portfolio/common/utils/lang/string_ext.dart';
+import 'package:portfolio/src/common/widgets/text_tags.dart';
 import 'package:portfolio/src/model/project_info.dart';
 import 'package:portfolio/utils/open_link.dart';
 
@@ -37,19 +38,6 @@ class ProjectItem extends StatelessWidget {
   Widget build(BuildContext context) {
     var colorScheme = Theme.of(context).colorScheme;
 
-    List<Color> gradientColors() {
-      if (projectInfo.technologies[0] == 'android') {
-        return const [
-          Color(0xffc1488d),
-          Color(0xff964bc6),
-        ];
-      }
-      if (projectInfo.technologies[0] == 'flutter') {
-        return const [Color(0xff49aeff), Color(0xff72afff)];
-      }
-      return const [Color(0xff51a4e4), Color(0xff5aa1ff)];
-    }
-
     return SizedBox(
       width: width,
       height: height,
@@ -68,34 +56,7 @@ class ProjectItem extends StatelessWidget {
           children: [
             Flexible(
               flex: 1,
-              child: Container(
-                padding: const EdgeInsets.only(
-                  left: 8,
-                  right: 8,
-                  top: 8,
-                  bottom: 5,
-                ),
-                decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.all(Radius.circular(15)),
-                    gradient: LinearGradient(
-                      colors: gradientColors(),
-                      begin: Alignment.topRight,
-                      end: Alignment.bottomLeft,
-                    )),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _urlIcons(),
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 8, bottom: 5),
-                        child: _description(),
-                      ),
-                    ),
-                    _technologyTags(),
-                  ],
-                ),
-              ),
+              child: _topSection(context: context),
             ),
             Container(
               width: double.infinity,
@@ -128,6 +89,53 @@ class ProjectItem extends StatelessWidget {
             )
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _topSection({required BuildContext context}) {
+    List<Color> gradientColors() {
+      if (projectInfo.technologies[0] == 'android') {
+        return const [
+          Color(0xffc1488d),
+          Color(0xff964bc6),
+        ];
+      }
+      if (projectInfo.technologies[0] == 'flutter') {
+        return const [Color(0xff49aeff), Color(0xff72afff)];
+      }
+      return const [Color(0xff51a4e4), Color(0xff5aa1ff)];
+    }
+
+    return Container(
+      padding: const EdgeInsets.only(
+        left: 8,
+        right: 8,
+        top: 8,
+        bottom: 5,
+      ),
+      decoration: BoxDecoration(
+          borderRadius: const BorderRadius.all(Radius.circular(15)),
+          gradient: LinearGradient(
+            colors: gradientColors(),
+            begin: Alignment.topRight,
+            end: Alignment.bottomLeft,
+          )),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _urlIcons(),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.only(top: 8, bottom: 5),
+              child: _description(),
+            ),
+          ),
+          TextTags(
+            technologies: projectInfo.technologies,
+            color: Colors.white.withOpacity(0.7),
+          ),
+        ],
       ),
     );
   }
@@ -181,28 +189,6 @@ class ProjectItem extends StatelessWidget {
       style: const TextStyle(color: Colors.white, height: 1.2),
       maxLines: 3,
       overflow: TextOverflow.ellipsis,
-    );
-  }
-
-  Widget _technologyTags() {
-    if (projectInfo.technologies.isEmpty) {
-      return const SizedBox();
-    }
-    var combinedString = '';
-
-    for (var tech in projectInfo.technologies) {
-      combinedString += "#${tech.replaceAll(' ', '_')} ";
-    }
-
-    return Text(
-      combinedString,
-      style: TextStyle(
-        color: Colors.white.withOpacity(0.7),
-        fontSize: 10,
-      ),
-      maxLines: 2,
-      overflow: TextOverflow.ellipsis,
-      textAlign: TextAlign.start,
     );
   }
 }
