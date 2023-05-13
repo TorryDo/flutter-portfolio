@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:portfolio/src/presentation/contact/contact_screen.dart';
@@ -10,7 +8,7 @@ import 'package:portfolio/src/presentation/project/project_screen.dart';
 import 'package:portfolio/utils/lib/provider/provider_ext.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:visibility_detector/visibility_detector.dart';
-
+import 'dart:developer';
 import '../../routes.dart';
 import 'about/about_screen.dart';
 import 'qualification/qualification_screen.dart';
@@ -50,12 +48,13 @@ class _MainNavigatorState extends State<MainNavigator> implements MainContract {
         return VisibilityDetector(
           key: Key(index.toString()),
           onVisibilityChanged: (VisibilityInfo info) {
-            // log('<> index = ${index} || ${info.visibleFraction}');
-            if (MainController.currentIndex != index &&
-                info.visibleFraction > 0.4) {
-              MainController.setIndex(index);
+            if(info.visibleFraction > 0) {
+              MainController.setIndexVisibility(index, info.visibleFraction);
+            }else{
+              MainController.removeIndexVisibility(index);
             }
           },
+
           child: _getScreen(index),
         );
       },
@@ -80,7 +79,7 @@ class _MainNavigatorState extends State<MainNavigator> implements MainContract {
     }
   }
 
-// region Implement contracts
+  // Implement contracts
   @override
   void navigateTo(String route) {
     _scrollController.scrollTo(
@@ -89,5 +88,4 @@ class _MainNavigatorState extends State<MainNavigator> implements MainContract {
       curve: Curves.easeInOutCubic,
     );
   }
-//endregion
 }
