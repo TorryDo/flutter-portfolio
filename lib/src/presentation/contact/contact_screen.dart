@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:portfolio/common/utils/framework/screen_size_x.dart';
 import 'package:portfolio/src/presentation/contact/contact_form.dart';
 import 'package:portfolio/src/provider/social_info_list_provider.dart';
 import 'package:portfolio/utils/lib/provider/provider_ext.dart';
@@ -26,16 +27,31 @@ class _ContactScreenState extends State<ContactScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
+    final screenWidth = context.width();
+    final screenHeight = context.height();
     return Material(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           const SizedBox(height: 20),
-          const Text(
-            "Let's create Awesome stuffs together",
-            style: TextStyle(fontWeight: FontWeight.normal, fontSize: 20),
+          ShaderMask(
+            shaderCallback: (Rect bounds) {
+              return const LinearGradient(
+                colors: [
+                  Color(0xffc1488d),
+                  Color(0xff964bc6),
+                ],
+              ).createShader(bounds);
+            },
+            child: const Text(
+              "Let's create Awesome stuffs Together",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 30,
+                color: Colors.white,
+              ),
+            ),
           ),
           const SizedBox(height: 10),
           _socialButtons(),
@@ -44,8 +60,7 @@ class _ContactScreenState extends State<ContactScreen> {
             padding: EdgeInsets.only(left: 20, right: 20, top: 15),
             child: ContactForm(),
           ),
-
-          const SizedBox(height: 100)
+          const SizedBox(height: 200)
         ],
       ),
     );

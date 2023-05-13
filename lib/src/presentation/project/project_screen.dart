@@ -23,40 +23,32 @@ class _ProjectScreenState extends State<ProjectScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Material(
-      child: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // const Padding(
-            //   padding: EdgeInsets.only(top: 20, left: 20, right: 20),
-            //   child: RoundedSearchBar(
-            //     width: double.infinity,
-            //     height: 60,
-            //   ),
-            // ),
-            const SizedBox(height: 20),
-            const Text('Recent Projects'),
-            const SizedBox(height: 10),
-            SizedBox(
-              width: double.infinity,
-              child: Wrap(
-                direction: Axis.horizontal,
-                alignment: WrapAlignment.start,
-                spacing: 10,
-                runSpacing: 10,
-                children: projectListProvider.get().map((e) {
-                  return ProjectItem(
-                    width: 250,
-                    height: 220,
-                    projectInfo: e,
-                  );
-                }).toList(),
-              ),
-            )
-          ],
-        ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(height: 20),
+          const Text('Recent Projects'),
+          const SizedBox(height: 10),
+          SizedBox(
+            width: double.infinity,
+            child: Wrap(
+              direction: Axis.horizontal,
+              alignment: WrapAlignment.start,
+              spacing: 10,
+              runSpacing: 10,
+              children: projectListProvider.get().map((e) {
+                return ProjectItem(
+                  width: 250,
+                  height: 220,
+                  projectInfo: e,
+                );
+              }).toList(),
+            ),
+          ),
+          const SizedBox(height: 150)
+        ],
       ),
     );
   }

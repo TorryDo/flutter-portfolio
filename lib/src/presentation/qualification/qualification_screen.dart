@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:portfolio/common/utils/framework/screen_size_x.dart';
 import 'package:portfolio/common/utils/lang/datetime_ext.dart';
 import 'package:portfolio/src/common/widgets/text_tags.dart';
 import 'package:portfolio/src/presentation/qualification/job_period_list_provider.dart';
@@ -27,6 +28,8 @@ class _QualificationScreenState extends State<QualificationScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = context.width();
+    final screenHeight = context.height();
     return Material(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -55,7 +58,8 @@ class _QualificationScreenState extends State<QualificationScreen> {
                 ),
               ],
             ),
-          )
+          ),
+          const SizedBox(height: 150)
         ],
       ),
     );
@@ -155,7 +159,7 @@ class _QualificationScreenState extends State<QualificationScreen> {
               if (jobPeriod.technologies.isNotEmpty) {
                 return Padding(
                   padding: const EdgeInsets.only(top: 8.0),
-                  child: TextTags(technologies: jobPeriod.technologies),
+                  child: TextTags(technologies: jobPeriod.technologies, color: colorScheme.onBackground.withOpacity(0.7),),
                 );
               }
               return const SizedBox();

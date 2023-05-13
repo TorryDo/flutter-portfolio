@@ -38,5 +38,10 @@ class MainProvider extends ChangeNotifier with Logger {
     notifyListeners();
   }
 
+  void setRoute(String route){
+    _route = route;
+    // notifyListeners();
+  }
+
   get currentRoute => _route;
 }

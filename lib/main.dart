@@ -1,13 +1,14 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:portfolio/custom_themes.dart';
+import 'package:portfolio/routes.dart';
 import 'package:portfolio/src/presentation/about/about_provider.dart';
+import 'package:portfolio/src/presentation/main_controller.dart';
+import 'package:portfolio/src/presentation/main_navigator.dart';
 import 'package:portfolio/src/presentation/project/project_list_provider.dart';
 import 'package:portfolio/src/presentation/qualification/job_period_list_provider.dart';
 import 'package:portfolio/src/provider/social_info_list_provider.dart';
 import 'package:portfolio/utils/const.dart';
-import 'package:portfolio/custom_themes.dart';
-import 'package:portfolio/routes.dart';
-import 'package:portfolio/src/presentation/main_navigator.dart';
 import 'package:portfolio/utils/lib/provider/provider_ext.dart';
 import 'package:provider/provider.dart';
 
@@ -80,62 +81,61 @@ class _MyAppState extends State<MyApp> {
               SizedBox(
                 width: Const.sideBarWidth,
                 height: double.infinity,
-                child: NavigationRail(
-
-                  selectedIndex: Routes.list.indexWhere((e) => e == mainProvider.currentRoute),
-                  groupAlignment: groupAlignment,
-                  onDestinationSelected: _onDestinationSelected,
-                  labelType: labelType,
-                  leading: showLeading
-                      ? FloatingActionButton(
-                          elevation: 0,
-                          onPressed: () {},
-                          child: const Icon(Icons.add),
-                        )
-                      : const SizedBox(),
-                  trailing: Expanded(
-                    child: Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Padding(
-                        padding: const EdgeInsets.only(bottom: 20.0),
-                        child: showTrailing
-                            ? FloatingActionButton(
-                                elevation: 0,
-                                onPressed: changeTheme,
-                                tooltip: "Right-click to get more options",
-                                child: getIconByTheme(mainProvider.theme),
-                              )
-                            : const SizedBox(),
+                child: StreamBuilder(
+                  initialData: 0,
+                  stream: MainController.indexStream,
+                  builder: (
+                    BuildContext context,
+                    AsyncSnapshot<int> snapshot,
+                  ) => NavigationRail(
+                    selectedIndex: snapshot.data,
+                    groupAlignment: groupAlignment,
+                    onDestinationSelected: _onDestinationSelected,
+                    labelType: labelType,
+                    trailing: Expanded(
+                      child: Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Padding(
+                          padding: const EdgeInsets.only(bottom: 20.0),
+                          child: showTrailing
+                              ? FloatingActionButton(
+                                  elevation: 0,
+                                  onPressed: changeTheme,
+                                  tooltip: "Right-click to get more options",
+                                  child: getIconByTheme(mainProvider.theme),
+                                )
+                              : const SizedBox(),
+                        ),
                       ),
                     ),
+                    destinations: const <NavigationRailDestination>[
+                      NavigationRailDestination(
+                        icon: Icon(Icons.person_outline),
+                        selectedIcon: Icon(Icons.person),
+                        label: Text('About'),
+                      ),
+                      // NavigationRailDestination(
+                      //   icon: Icon(Icons.star_border),
+                      //   selectedIcon: Icon(Icons.star),
+                      //   label: Text('Skills'),
+                      // ),
+                      NavigationRailDestination(
+                        icon: Icon(Icons.book_outlined),
+                        selectedIcon: Icon(Icons.book),
+                        label: Text('Projects'),
+                      ),
+                      NavigationRailDestination(
+                        icon: Icon(Icons.work_outline),
+                        selectedIcon: Icon(Icons.work),
+                        label: Text('Qualification'),
+                      ),
+                      NavigationRailDestination(
+                        icon: Icon(Icons.email_outlined),
+                        selectedIcon: Icon(Icons.email),
+                        label: Text('Contact'),
+                      ),
+                    ],
                   ),
-                  destinations: const <NavigationRailDestination>[
-                    NavigationRailDestination(
-                      icon: Icon(Icons.person_outline),
-                      selectedIcon: Icon(Icons.person),
-                      label: Text('About'),
-                    ),
-                    // NavigationRailDestination(
-                    //   icon: Icon(Icons.star_border),
-                    //   selectedIcon: Icon(Icons.star),
-                    //   label: Text('Skills'),
-                    // ),
-                    NavigationRailDestination(
-                      icon: Icon(Icons.book_outlined),
-                      selectedIcon: Icon(Icons.book),
-                      label: Text('Projects'),
-                    ),
-                    NavigationRailDestination(
-                      icon: Icon(Icons.work_outline),
-                      selectedIcon: Icon(Icons.work),
-                      label: Text('Qualification'),
-                    ),
-                    NavigationRailDestination(
-                      icon: Icon(Icons.email_outlined),
-                      selectedIcon: Icon(Icons.email),
-                      label: Text('Contact'),
-                    ),
-                  ],
                 ),
               ),
               Expanded(
@@ -144,12 +144,12 @@ class _MyAppState extends State<MyApp> {
                   child: Padding(
                     padding: const EdgeInsets.only(right: 10, bottom: 20),
                     child: MouseRegion(
-                      onEnter: (PointerEnterEvent event){
+                      onEnter: (PointerEnterEvent event) {
                         setState(() {
                           extendLikeButton = true;
                         });
                       },
-                      onExit: (PointerExitEvent event){
+                      onExit: (PointerExitEvent event) {
                         setState(() {
                           extendLikeButton = false;
                         });
@@ -167,7 +167,6 @@ class _MyAppState extends State<MyApp> {
               )
             ],
           ),
-
         ],
       ),
     );

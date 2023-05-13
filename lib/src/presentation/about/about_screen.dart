@@ -29,38 +29,52 @@ class _AboutScreenState extends State<AboutScreen> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Material(
-      child: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.only(left: 15, right: 10),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: (size.width / 10).ceilToDouble()),
-              const Text('Hi, my name is'),
-              Text(
-                "${aboutProvider.get().fullName}.",
-                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 40),
-              ),
-              Text("${aboutProvider.get().shortIntro}.",
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 30,
-                      color: colorScheme.onBackground.withOpacity(0.8))),
-              const SizedBox(height: 20),
-              Text(aboutProvider.get().longIntro),
-              SizedBox(height: (size.width / 10).ceilToDouble()),
-              OutlinedButton(
-                onPressed: () {
-                  mainProvider.navigateToRoute(Routes.CONTACT_SCREEN);
-                },
-                child: Container(
-                  margin: const EdgeInsets.symmetric(vertical: 5),
-                  child: const Text('Get In Touch', style: TextStyle(fontSize: 20)),
-                ),
-              )
-            ],
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(height: 100),
+          const Text('Hi, my name is'),
+          Text(
+            "${aboutProvider.get().fullName}.",
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 40),
           ),
-        ),
+          ShaderMask(
+            shaderCallback: (Rect bounds) {
+              return const LinearGradient(
+                colors: [
+                  Color(0xffc1488d),
+                  Color(0xff964bc6),
+                ],
+              ).createShader(bounds);
+            },
+            child: Text(
+              "${aboutProvider.get().shortIntro}.",
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 30,
+                color: Colors.white,
+              ),
+            ),
+          ),
+          const SizedBox(height: 30),
+          Text(aboutProvider.get().longIntro),
+          const SizedBox(height: 100),
+          _getInTouchButton(),
+          const SizedBox(height: 150)
+        ],
+      ),
+    );
+  }
+
+  Widget _getInTouchButton(){
+    return OutlinedButton(
+      onPressed: () {
+        mainProvider.navigateToRoute(Routes.CONTACT_SCREEN);
+      },
+      child: Container(
+        margin: const EdgeInsets.symmetric(vertical: 5),
+        child:
+        const Text('Get In Touch', style: TextStyle(fontSize: 20)),
       ),
     );
   }
