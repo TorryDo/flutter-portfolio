@@ -50,6 +50,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   late MainProvider mainProvider;
+  late ColorScheme colorScheme;
 
   NavigationRailLabelType labelType = NavigationRailLabelType.all;
   bool showLeading = false;
@@ -60,6 +61,7 @@ class _MyAppState extends State<MyApp> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     mainProvider = context.provider<MainProvider>();
+    colorScheme = Theme.of(context).colorScheme;
   }
 
   bool extendLikeButton = false;
@@ -87,7 +89,9 @@ class _MyAppState extends State<MyApp> {
                   builder: (
                     BuildContext context,
                     AsyncSnapshot<int> snapshot,
-                  ) => NavigationRail(
+                  ) =>
+                      NavigationRail(
+                        // backgroundColor: colorScheme.surfaceTint,
                     selectedIndex: snapshot.data,
                     groupAlignment: groupAlignment,
                     onDestinationSelected: _onDestinationSelected,
@@ -138,33 +142,33 @@ class _MyAppState extends State<MyApp> {
                   ),
                 ),
               ),
-              Expanded(
-                child: Align(
-                  alignment: Alignment.bottomRight,
-                  child: Padding(
-                    padding: const EdgeInsets.only(right: 10, bottom: 20),
-                    child: MouseRegion(
-                      onEnter: (PointerEnterEvent event) {
-                        setState(() {
-                          extendLikeButton = true;
-                        });
-                      },
-                      onExit: (PointerExitEvent event) {
-                        setState(() {
-                          extendLikeButton = false;
-                        });
-                      },
-                      child: FloatingActionButton.extended(
-                        onPressed: () {},
-                        label: const Text("42.083"),
-                        icon: const Icon(Icons.thumb_up),
-                        isExtended: extendLikeButton,
-                        tooltip: "Gimme a like!",
-                      ),
-                    ),
-                  ),
-                ),
-              )
+              // Expanded(
+              //   child: Align(
+              //     alignment: Alignment.bottomRight,
+              //     child: Padding(
+              //       padding: const EdgeInsets.only(right: 10, bottom: 20),
+              //       child: MouseRegion(
+              //         onEnter: (PointerEnterEvent event) {
+              //           setState(() {
+              //             extendLikeButton = true;
+              //           });
+              //         },
+              //         onExit: (PointerExitEvent event) {
+              //           setState(() {
+              //             extendLikeButton = false;
+              //           });
+              //         },
+              //         child: FloatingActionButton.extended(
+              //           onPressed: () {},
+              //           label: const Text("42.083"),
+              //           icon: const Icon(Icons.thumb_up),
+              //           isExtended: extendLikeButton,
+              //           tooltip: "Gimme a like!",
+              //         ),
+              //       ),
+              //     ),
+              //   ),
+              // )
             ],
           ),
         ],

@@ -16,6 +16,7 @@ import 'qualification/qualification_screen.dart';
 class MainNavigator extends StatefulWidget {
   const MainNavigator({Key? key}) : super(key: key);
 
+
   @override
   State<MainNavigator> createState() => _MainNavigatorState();
 }
@@ -82,10 +83,10 @@ class _MainNavigatorState extends State<MainNavigator> implements MainContract {
   // Implement contracts
   @override
   void navigateTo(String route) {
-    _scrollController.scrollTo(
+    _scrollController.jumpTo(
       index: Routes.list.indexOf(route),
-      duration: const Duration(milliseconds: 300),
-      curve: Curves.easeInOutCubic,
+      // duration: const Duration(milliseconds: 300),
+      // curve: Curves.easeInOutCubic,
     );
   }
 }

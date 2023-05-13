@@ -42,10 +42,10 @@ class ProjectItem extends StatelessWidget {
       width: width,
       height: height,
       child: Card(
-        color: color ?? colorScheme.background,
-        shadowColor: shadowColor ?? colorScheme.onBackground,
+        color: color ?? colorScheme.surface,
+        shadowColor: shadowColor ?? colorScheme.shadow,
         surfaceTintColor: surfaceTintColor ?? colorScheme.background,
-        elevation: elevation ?? 5,
+        elevation: elevation ?? 7,
         shape: shape ??
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
         borderOnForeground: borderOnForeground,

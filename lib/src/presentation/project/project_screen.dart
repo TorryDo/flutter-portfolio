@@ -25,30 +25,33 @@ class _ProjectScreenState extends State<ProjectScreen> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Material(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const SizedBox(height: 20),
-          const Text('Recent Projects'),
-          const SizedBox(height: 10),
-          SizedBox(
-            width: double.infinity,
-            child: Wrap(
-              direction: Axis.horizontal,
-              alignment: WrapAlignment.start,
-              spacing: 10,
-              runSpacing: 10,
-              children: projectListProvider.get().map((e) {
-                return ProjectItem(
-                  width: 250,
-                  height: 220,
-                  projectInfo: e,
-                );
-              }).toList(),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 20),
+            const Text('Recent Projects'),
+            const SizedBox(height: 10),
+            SizedBox(
+              width: double.infinity,
+              child: Wrap(
+                direction: Axis.horizontal,
+                alignment: WrapAlignment.start,
+                spacing: 10,
+                runSpacing: 10,
+                children: projectListProvider.get().map((e) {
+                  return ProjectItem(
+                    width: 250,
+                    height: 220,
+                    projectInfo: e,
+                  );
+                }).toList(),
+              ),
             ),
-          ),
-          const SizedBox(height: 150)
-        ],
+            const SizedBox(height: 150)
+          ],
+        ),
       ),
     );
   }

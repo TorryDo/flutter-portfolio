@@ -28,46 +28,46 @@ class _QualificationScreenState extends State<QualificationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = context.width();
-    final screenHeight = context.height();
     return Material(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          const SizedBox(height: 20),
-          const Text(
-            'Qualification',
-            style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(height: 5),
-          const Text('Education & Experience'),
-          const SizedBox(height: 20),
-          SizedBox(
-            width: double.infinity,
-            child: Wrap(
-              alignment: WrapAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 20),
-                  child: _educationSection(),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 20),
-                  child: _experienceSection(
-                      jobPeriodList: jobPeriodListProvider.get()),
-                ),
-              ],
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const SizedBox(height: 20),
+            const Text(
+              'Qualification',
+              style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
             ),
-          ),
-          const SizedBox(height: 150)
-        ],
+            const SizedBox(height: 5),
+            const Text('Education & Experience'),
+            const SizedBox(height: 20),
+            SizedBox(
+              width: double.infinity,
+              child: Wrap(
+                alignment: WrapAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 20),
+                    child: _educationSection(),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 20),
+                    child: _experienceSection(
+                        jobPeriodList: jobPeriodListProvider.get()),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 150)
+          ],
+        ),
       ),
     );
   }
 
   Widget _educationSection() {
-    return Container(
-      padding: const EdgeInsets.only(left: 20),
+    return SizedBox(
       width: 300,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -100,6 +100,7 @@ class _QualificationScreenState extends State<QualificationScreen> {
         children: [
           for (var i = 0; i < jobPeriodList.length; i++)
             TimelineTile(
+
               alignment: TimelineAlign.manual,
               endChild: Padding(
                 padding: const EdgeInsets.only(bottom: 30, left: 8),
@@ -116,7 +117,7 @@ class _QualificationScreenState extends State<QualificationScreen> {
               lineXY: 0,
               isFirst: i == 0,
               isLast: i == jobPeriodList.length - 1,
-              indicatorStyle: const IndicatorStyle(indicatorXY: 0),
+              indicatorStyle: IndicatorStyle(indicatorXY: 0, color: colorScheme.primary),
             )
         ],
       ),
